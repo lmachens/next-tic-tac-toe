@@ -5,5 +5,5 @@ type Props = {
   value: ReactNode;
 };
 export default function Square(props: Props) {
-  return <button className={styles.square}>{/* TODO */}</button>;
+  return <button className={styles.square}>{props.value}</button>;
 }
