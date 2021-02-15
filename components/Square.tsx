@@ -1,9 +1,15 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import styles from "../styles/Square.module.css";
 
 type Props = {
   value: ReactNode;
 };
 export default function Square(props: Props) {
-  return <button className={styles.square}>{props.value}</button>;
+  const [value, setValue] = useState(null);
+
+  return (
+    <button className={styles.square} onClick={() => setValue("🐶")}>
+      {value}
+    </button>
+  );
 }
