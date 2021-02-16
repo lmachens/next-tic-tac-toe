@@ -1,34 +1,17 @@
-import { useState } from "react";
 import styles from "../styles/Board.module.css";
-import { calculateWinner } from "../utils/game";
 import Square from "./Square";
 
-export default function Board() {
-  const [squares, setSquares] = useState(Array(9).fill(null));
-  const [dogIsNext, setDogIsNext] = useState(true);
-
-  const winner = calculateWinner(squares);
-  const nextPlayer = dogIsNext ? "🐶" : "🐭";
-
-  function handleClick(i: number) {
-    if (winner || squares[i]) {
-      return;
-    }
-    const newSquares = [...squares];
-    newSquares[i] = nextPlayer;
-    setSquares(newSquares);
-    setDogIsNext(!dogIsNext);
-  }
-
+type Props = {
+  squares: string[];
+  onClick(i: number): void;
+};
+export default function Board({ squares, onClick }: Props) {
   function renderSquare(i: number) {
-    return <Square value={squares[i]} onClick={() => handleClick(i)} />;
+    return <Square value={squares[i]} onClick={() => onClick(i)} />;
   }
-
-  const status = winner ? `Winner: ${winner}` : `Next player: ${nextPlayer}`;
 
   return (
     <div>
-      <div className={styles.status}>{status}</div>
       <div className={styles.boardRow}>
         {renderSquare(0)}
         {renderSquare(1)}
