@@ -10,18 +10,28 @@ export default function Game() {
     },
   ]);
   const [dogIsNext, setDogIsNext] = useState(true);
-  const current = history[history.length - 1];
+  const [stepNumber, setStepNumber] = useState(0);
+
+  const current = history[stepNumber];
   const winner = calculateWinner(current.squares);
   const nextPlayer = dogIsNext ? "🐶" : "🐭";
 
   function handleClick(i: number) {
+    const currentHistory = history.slice(0, stepNumber + 1);
+
     if (winner || current.squares[i]) {
       return;
     }
     const newSquares = [...current.squares];
     newSquares[i] = nextPlayer;
-    setHistory([...history, { squares: newSquares }]);
+    setHistory([...currentHistory, { squares: newSquares }]);
     setDogIsNext(!dogIsNext);
+    setStepNumber(currentHistory.length);
+  }
+
+  function jumpTo(step) {
+    setStepNumber(step);
+    setDogIsNext(step % 2 === 0);
   }
 
   const status = winner ? `Winner: ${winner}` : `Next player: ${nextPlayer}`;
