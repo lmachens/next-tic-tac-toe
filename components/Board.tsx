@@ -7,12 +7,15 @@ export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [dogIsNext, setDogIsNext] = useState(true);
 
+  const winner = calculateWinner(squares);
+  const nextPlayer = dogIsNext ? "🐶" : "🐭";
+
   function handleClick(i: number) {
-    if (calculateWinner(squares) || squares[i]) {
+    if (winner || squares[i]) {
       return;
     }
     const newSquares = [...squares];
-    newSquares[i] = dogIsNext ? "🐶" : "🐭";
+    newSquares[i] = nextPlayer;
     setSquares(newSquares);
     setDogIsNext(!dogIsNext);
   }
@@ -21,13 +24,7 @@ export default function Board() {
     return <Square value={squares[i]} onClick={() => handleClick(i)} />;
   }
 
-  const winner = calculateWinner(squares);
-  let status;
-  if (winner) {
-    status = `Winner: ${winner}`;
-  } else {
-    status = `Next player: ${dogIsNext ? "🐶" : "🐭"}`;
-  }
+  const status = winner ? `Winner: ${winner}` : `Next player: ${nextPlayer}`;
 
   return (
     <div>
