@@ -26,6 +26,14 @@ export default function Game() {
 
   const status = winner ? `Winner: ${winner}` : `Next player: ${nextPlayer}`;
 
+  const moves = history.map((step, move) => {
+    const description = move ? `Go to move # ${move}` : "Go to game start";
+    return (
+      <li>
+        <button onClick={() => jumpTo(move)}>{description}</button>
+      </li>
+    );
+  });
   return (
     <div className={styles.game}>
       <div className={styles.gameBoard}>
@@ -33,7 +41,7 @@ export default function Game() {
       </div>
       <div className={styles.gameInfo}>
         <div>{status}</div>
-        <ol>{/* TODO */}</ol>
+        <ol>{moves}</ol>
       </div>
     </div>
   );
