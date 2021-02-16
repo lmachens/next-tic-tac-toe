@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "../styles/Board.module.css";
+import { calculateWinner } from "../utils/game";
 import Square from "./Square";
 
 export default function Board() {
@@ -7,6 +8,9 @@ export default function Board() {
   const [dogIsNext, setDogIsNext] = useState(true);
 
   function handleClick(i: number) {
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
     const newSquares = [...squares];
     newSquares[i] = dogIsNext ? "🐶" : "🐭";
     setSquares(newSquares);
@@ -17,7 +21,13 @@ export default function Board() {
     return <Square value={squares[i]} onClick={() => handleClick(i)} />;
   }
 
-  const status = `Next player: ${dogIsNext ? "🐶" : "🐭"}`;
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = `Winner: ${winner}`;
+  } else {
+    status = `Next player: ${dogIsNext ? "🐶" : "🐭"}`;
+  }
 
   return (
     <div>
