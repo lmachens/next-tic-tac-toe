@@ -6,7 +6,7 @@ export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i: number) {
-    const newSquares = squares.slice();
+    const newSquares = [...squares];
     newSquares[i] = "X";
     setSquares(newSquares);
   }
